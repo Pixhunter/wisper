@@ -61,27 +61,27 @@ Options:
 
 ### Input Folder
 
-* default input/output FOLDER = '/videos' 
-    Directory containing .mp4 lecture videos.
+* default `input/output` **FOLDER** = `/videos`
+    Directory containing `.mp4` lecture videos.
     Output files are written to the same folder (or you can change it)
 
 ---
 
 ### Transcription Settings
 
-#### Inside transcribe_stream():
+#### Inside `transcribe_stream()`:
 
-* task="transcribe"
+* task=`transcribe`
     Ensures speech is transcribed, not translated.
-* language="ru"
-    Forces language detection (can be changed to "en", etc.).
-* temperature=0.2
+* language=`ru`
+    Forces language detection (can be changed to `en`, etc.).
+* temperature=`0.2`
     Controls randomness:
-    * 0.0 → strict, literal transcription
+    * `0.0` → strict, literal transcription
     * higher → more flexible / creative
-* condition_on_previous_text=False
+* `condition_on_previous_text=False`
     Prevents Whisper from rewriting earlier text across chunks.
-* verbose=False
+* `verbose=False`
     Disables Whisper console logs (cleaner output).
 
 ---
@@ -109,7 +109,7 @@ Options:
 
 Usage
 
-1. Place .mp4 lecture videos in the target folder:
+1. Place `.mp4` lecture videos in the target folder:
     * `/videos` (or somewhere else)
 
 2. Run the script:
