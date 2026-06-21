@@ -12,7 +12,7 @@ CHUNK_SECONDS = 60  # 1 minute
 bytes_per_second = 16000 * 2  # 16kHz * 2 bytes (int16)
 BUFFER_SIZE = 20 * 1024 * 1024 # 20MB
 MAX_WORKERS = 3
-MODEL = whisper.load_model("medium") # can be lardge (but tooo slow)
+MODEL = whisper.load_model("medium")
 FOLDER = '/videos'
 
 
@@ -31,7 +31,7 @@ def read_audio_chunks(process):
 
         audio_int16 = np.frombuffer(raw_audio, dtype=np.int16)
         audio_float32 = audio_int16.astype(np.float32)
-        audio = audio_float32 / 32768.0  # normalization for int16 range ≈ [-1.0, 1.0]
+        audio = audio_float32 / 32768.0 # normalization for int16 range ≈ [-1.0, 1.0]
 
         yield audio
         
@@ -138,11 +138,11 @@ def transcribe_stream(video_path):
     for chunk in read_audio_chunks(process):
         result = MODEL.transcribe(
             chunk,
-            task="transcribe",                  # NOT "translate"
-            language="ru",                      # can be change to any other like en
-            temperature=0.2,                    # 0.0 = deterministic, literal , higher more creative
-            condition_on_previous_text=False,   # do not rewrite previous sentences
-            verbose=False                       # no progress logs
+            task="transcribe",
+            language="ru",
+            temperature=0.2,
+            condition_on_previous_text=False,
+            verbose=False
         )
 
         for seg in result["segments"]:
@@ -154,7 +154,7 @@ def transcribe_stream(video_path):
 
         offset += CHUNK_SECONDS
 
-    logging.info(f"File succesfully transcribed {filename}", flush=True)
+    logging.info(f"File succesfully transcribed {filename}")
     writer.close()
 
 
@@ -172,7 +172,7 @@ def process_video(video_path):
 
 def process_folder(folder):
     files = get_video_files(folder)
-    logging.info(f"Total files to work {len(files)}: {files}", flush=True)
+    logging.info(f"Total files to work {len(files)}: {files}")
     with ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = [executor.submit(process_video, f) for f in files]
         completed = 0
@@ -181,10 +181,10 @@ def process_folder(folder):
             completed += 1
             try:
                 file, duration = future.result()
-                logging.info(f"Done ({completed}/{len(files)}): {file} in {duration:.1f}s", flush=True)
+                logging.info(f"Done ({completed}/{len(files)}): {file} in {duration:.1f}s")
 
             except Exception as e:
-                logging.info(f"Failed ({completed}/{len(files)}): {e}", flush=True)
+                logging.info(f"Failed ({completed}/{len(files)}): {e}")
 
 
 logging.info(f"start work with {MAX_WORKERS}")
