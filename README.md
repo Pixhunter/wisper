@@ -1,5 +1,7 @@
 ## Video Lecture Transcription Tool
 
+<img width="1036" height="624" alt="image" src="https://github.com/user-attachments/assets/2b78d9d6-8464-42f4-9371-29acfdd9c43a" />
+
 ### Overview
 
 This script is designed to transcribe video lectures (.mp4) into text files using OpenAI Whisper.
